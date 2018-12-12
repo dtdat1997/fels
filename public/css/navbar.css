@@ -1,0 +1,27 @@
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.navbar, .navbar.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+    color: #333;
+    bo
+}
+
+.navbar, .navbar.navbar-default a:hover{
+    color: #000;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #333;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #000;
+}
+

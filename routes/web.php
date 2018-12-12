@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Home
+Route::get('/','HomeController@index');
+Route::post('/','ExamsController@store');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Do exam
+Route::get('/exams','ExamsController@index');
+
