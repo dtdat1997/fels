@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Questions extends Model
+class Question extends Model
 {
     protected $table = 'questions';
     protected $guarded = ['id'];
@@ -12,11 +12,16 @@ class Questions extends Model
 
     public function subjects()
     {
-        return $this->belongsTo('App\Subjects');
+        return $this->belongsTo('App\Subject');
+    }
+
+    public function exams()
+    {
+        return $this->belongsToMany('App\Exam', 'exam_question', 'question_id', 'exam_id');
     }
 
     public function answers()
     {
-        return $this->hasMany('App\Answers', 'question_id');
+        return $this->hasMany('App\Answer', 'question_id');
     }
 }

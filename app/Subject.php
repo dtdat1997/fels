@@ -10,20 +10,15 @@ class Subject extends Model
 
     protected $guarded = ['id'];
     
-    protected $fillable = ['name_subject', 'question_number', 'description'];
-
-    public function getName()
-    {
-        return $this->name_subject;
-    }
+    protected $fillable = ['name_subject', 'question_number', 'duration', 'description'];
 
     public function exams()
     {
-        return $this->hasMany('App\Exams', 'subject_id');
+        return $this->hasMany('App\Exam', 'subject_id');
     }
 
     public function questions()
     {
-        return $this->hasMany('App\Questions', 'subject_id');
+        return $this->hasMany('App\Question', 'subject_id');
     }
 }

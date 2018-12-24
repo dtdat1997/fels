@@ -9,6 +9,9 @@
 	<div class="row exam">
 		<div class="col-md-12">
 			<div class="form-exam">
+				@if(!Auth::check())
+					die();
+				@endif
 				@if ($subjects->isEmpty())
                		 <p> There is no subject.</p>
            		@else
@@ -51,7 +54,7 @@
 					<tr>
 					<td>{!! $exam->created_at !!}</td>
 					<td>{!! $exam->name_subject !!}</td>
-					<td><span class="label label-primary">start</span>
+					<td><span class="label label-primary">{!! $exam->status !!}</span>
 					</td>
 					<td>{!! $exam->duration !!}</td>
 					<td>{!! $exam->question_number !!}</td>
@@ -60,7 +63,7 @@
 						@endif
 					</td>
 					<td>{!! $exam->score !!}</td>
-					<td><a class="btn btn-primary button" href="/exams">Start</a></td>
+					<td><a class="btn btn-primary button" href="/exams/{!! $exam->id !!}">Start</a></td>
 					</tr>
 				@endforeach
 		<!-- 	<tr>

@@ -45,3 +45,79 @@
 .countdown-period {
     display: block;
 }
+
+.exam .radio {
+    padding-left: 20px;
+    font-weight: normal;
+}
+
+.row-exam label {
+    color: #333;
+}
+
+.checkbox, .radio {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.radio, .checkbox {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.exam #btn-submit-form-group {
+    position: fixed;
+    bottom: 0px;
+    right: 0;
+    left: 0;
+}
+
+.exam .btn-submit {
+    border-radius: 2px;
+    margin-bottom: 10px;
+    width: 20%;
+    min-width: 200px;
+}
+
+.edit_exam label {
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333333;
+}
+
+.edit_exam input[type="radio"]{
+    opacity: unset;
+    height: 13px;
+    width: 13px;
+}
+#btn-submit-form-group .btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+#btn-submit-form-group .btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+#btn-submit-form-group .btn-primary:hover{
+    background-color: #4191CC   ;
+}
+
+#btn-submit-form-group .btn-danger:hover {
+    background-color: #A5050E;
+}
+
+.container:after {
+    clear: both;
+}
+
+div {
+    display: block;
+}   

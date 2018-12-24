@@ -22,14 +22,21 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Member
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            @if (Auth::check())
-                                @role('manager')
-                                    <li><a href="/admin">Admin</a></li>
-                                @endrole
-                                    <li><a href="/users/logout">Logout</a></li>
-                            @else
-                                <li><a href="/users/register">Register</a></li>
-                                <li><a href="/users/login">Login</a></li>
+                            @if (Route::has('login'))
+                            <div class="top-right links">
+                                @if (Route::has('login'))
+                                    <div class="top-right links">
+                                    @auth
+                                         <a href="{{ url('/home') }}">Home</a>
+                                @else
+                                    <a href="{{ route('login') }}">Login</a>
+                                    @if (Route::has('register'))
+                                         <a href="{{ route('register') }}">Register</a>
+                                @endif
+                                    @endauth
+                                </div>
+                                @endif
+                            </div>
                             @endif
                         </ul>
                     </li>

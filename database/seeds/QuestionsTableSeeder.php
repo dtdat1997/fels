@@ -11,8 +11,8 @@ class QuestionsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 100; $i++) { 
-        	$qs = factory(App\Questions::class)->create();
+        for ($i=0; $i < 500; $i++) { 
+        	$qs = factory(App\Question::class)->create();
         	factory(App\Answer::class,4)->create([
                 'question_id' => $qs->id,
             ]);

@@ -15,5 +15,15 @@ Route::get('/','HomeController@index');
 Route::post('/','ExamsController@store');
 
 //Do exam
-Route::get('/exams','ExamsController@index');
+Route::get('/exams/{id?}','ExamQuestionsController@index');
 
+
+Auth::routes();
+
+Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('users/register', 'Auth\RegisterController@register');
+Route::get('users/logout', 'Auth\LoginController@logout');
+Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('users/login', 'Auth\LoginController@login');
+
+Route::get('/home', 'HomeController@index')->name('home');

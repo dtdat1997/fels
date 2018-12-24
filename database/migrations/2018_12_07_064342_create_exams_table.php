@@ -26,7 +26,7 @@ class CreateExamsTable extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->time('spent_time')->nullable();
-            $table->integer('status');
+            $table->char('status',10)->default('start');
             $table->integer('score')->default(0);
             $table->timestamps();
         });
