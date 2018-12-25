@@ -13,18 +13,18 @@
       <hr>
       <input type="hidden" name="duration" id="duration" value="0">
     </div>
-	<form class="edit_exam" id="edit_exam" action="/exam/111" accept-charset="UTF-8" method="post">
+	<form class="edit_exam" id="edit_exam" action="" accept-charset="UTF-8" method="post">
 		<input name="utf8" type="hidden" value="✓">
 		<input type="hidden" name="_method" value="patch">
 		<input type="hidden" name="authenticity_token" value="wNP2VHpKw16NG4eEV/1vByxRebzQ6RehCMiLVKjhvaWkLfORmgYDndlxTG6rB/jJ+id+WAAU0Uqo6hJCW2b3Mg==">
 	<ol>
-        @foreach($user_qs[0]->questions as $qs)
-    		<li id="">
+        @foreach($userQs[0]->questions as $qs)
+    		<li class="questions_class" id="{{ $qs->pivot->id }}">
             <strong>{!! $qs->content_question !!}</strong>     
 
           @foreach($qs->answers as $answer) 
                 <label class="radio" for="exam_results_attributes_0_answers_attributes_0_option_id">
-                    <input type="radio" value="3111" class="radio" name="exam_answer_{{ $answer->id }}" 
+                    <input type="radio" value={{ $answer->id }} class="radio" name="exam_answer_{{ $answer->question_id }}" 
                     id="exam_results_attributes_0_answers_attributes_0_option_id_3111">{{ $answer->content_answer }}
                 </label>
                @endforeach  
@@ -34,16 +34,17 @@
         @endforeach
         <br><br>
 	</ol>
+    </form>
     <div id="btn-submit-form-group">
       <div class="container">
         <div class="row">
-          <input type="submit" name="commit" value="Save" class="btn btn-primary btn-submit submit-time-out">
+          <input type="submit" id="btSave" name="commit" value="Save" class="btn btn-primary btn-submit submit-time-out" onclick="getAnswer()">
           <input type="submit" name="commit" value="Finish" class="btn btn-danger btn-submit pull-right" id="btn-finish" data-confirm="Are you sure to finish your exam ?
             You can't change your answers after you click button OK.">
         </div>
       </div>
     </div>
-	</form>
+	
    
 	
 	<div class="timer">
@@ -68,6 +69,7 @@
 	</div>
 	</div>
 </div>
+
 @endsection
 @push('js')
     <script type="text/javascript">
@@ -96,5 +98,36 @@
         }
         target--;
     }
+
+    function getAnswer(){
+        let user_answer = [];
+        $('.questions_class').each(function( index, value ) {
+            id = $(this).attr('id');
+            answer = $(this).find('input[type="radio"]:checked').val();
+            user_answer.push({'id': id,'answer': answer});
+        });
+        return user_answer;
+
+    }
+    $('#btSave').click(function(event) {
+        /* Act on the event */
+        $.ajax({
+            url: '/save/'+{!! $exams->id !!},
+
+            type: 'POST',
+            dataType: 'json',
+            data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
+        })
+        .done(function() {
+            window.location.href("/");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+        
     </script> 
 @endpush

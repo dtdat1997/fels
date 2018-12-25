@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exam;
 use App\Question;
 use App\ExamQuestion;
+use App\ExamAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,20 @@ class ExamsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    protected $request;
+    function __construct(Request $request)
     {
-        $exams = Exam::all();
-        return view('exam', compact('exams'));
+        $this->request = $request;
+    }
+    public function index($id)
+    {
+        $exams = Exam::with('subject')->where('id', $id)->firstOrFail();
+        $exams->status = 'Testing';
+        $exams->save();
+
+        $userQs = Exam::with('questions.answers')->where('id', $id)->get();
+         //dd($userQs);
+        return view('exam', compact('userQs', 'exams'));
     }
 
     /**
@@ -47,6 +58,7 @@ class ExamsController extends Controller
                     ->where('subject_id', $exam->subject_id)
                     ->inRandomOrder()
                     ->limit(20)->get();
+
         foreach ($questions as $question) {
             $userQs = new ExamQuestion([
                 'question_id' => $question->id,
@@ -60,7 +72,18 @@ class ExamsController extends Controller
 
     public function save($id)
     {
-        //if()
+        $ansSave = $this->request->post()['data'];
+        
+        foreach ($ansSave as $ans) {
+            if(isset($ans['answer'])){
+                $userAns = ExamAnswer::updateOrCreate([
+                        'answer_id' => $ans['answer'],
+                        'exam_question_id' => $ans['id'],
+                    ]);
+                $userAns->save();
+            }      
+        }
+        return json_encode(true);
     }
 
     /**

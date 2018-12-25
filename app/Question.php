@@ -17,7 +17,7 @@ class Question extends Model
 
     public function exams()
     {
-        return $this->belongsToMany('App\Exam', 'exam_question', 'question_id', 'exam_id');
+        return $this->belongsToMany('App\Exam', 'exam_question', 'question_id', 'exam_id')->withPivot('id');
     }
 
     public function answers()

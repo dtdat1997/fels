@@ -15,10 +15,11 @@ class CreateExamAnswerTable extends Migration
     {
         Schema::create('exam_answer', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('answer_id');
+            $table->unsignedInteger('exam_question_id')->unique();
+            $table->foreign('exam_question_id')
+                    ->references('id')->on('exam_question');
+            $table->unsignedInteger('answer_id')->unique();
             $table->foreign('answer_id')->references('id')->on('answers');
-            $table->unsignedInteger('exam_question_id');
-            $table->foreign('exam_question_id')->references('id')->on('exam_question');
             $table->timestamps();
         });
     }

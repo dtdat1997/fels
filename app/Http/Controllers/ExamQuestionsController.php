@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exam;
-use App\Question;
-use App\Answer;
-use App\ExamQuestion;
-use DB;
 
 class ExamQuestionsController extends Controller
 {
@@ -16,6 +12,7 @@ class ExamQuestionsController extends Controller
         $exams = Exam::with('subject')->where('id', $id)->firstOrFail();
 
         $userQs = Exam::with('questions.answers')->where('id', $id)->get();
+        // dd(userQs);
             
         return view('exam', compact('userQs', 'exams'));
     }

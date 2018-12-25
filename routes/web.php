@@ -11,13 +11,16 @@
 |
 */
 //Home
-Route::get('/','HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::post('/','ExamsController@store');
 
 //Do exam
-Route::get('/exams/{id?}','ExamQuestionsController@index');
+Route::get('/exams/{id?}','ExamsController@index');
 
+//Save exam
+Route::post('/save/{id?}','ExamsController@save');
 
+//Auth
 Auth::routes();
 
 Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
@@ -26,4 +29,4 @@ Route::get('users/logout', 'Auth\LoginController@logout');
 Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('users/login', 'Auth\LoginController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
