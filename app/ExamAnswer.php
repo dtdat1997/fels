@@ -10,9 +10,9 @@ class ExamAnswer extends Model
 
     protected $guarded = ['id'];
     
-    protected $fillable = ['answer_id', 'exam_question_id'];
+    protected $fillable = ['exam_question_id', 'answer_id'];
 
-    public function exam_question()
+    public function examQuestion()
     {
         return $this->belongsTo('App\ExamQuestion');
     }

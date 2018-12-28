@@ -15,8 +15,8 @@ class Answer extends Model
         return $this->belongsTo('App\Question');
     }
 
-    // public function exam_questions()
-    // {
-    //  return $this->belongsTo('App\ExamQuestion');
-    // }
+    public function examAnswer()
+    {
+        return $this->hasMany('App\ExamAnser', 'answer_id');
+    }
 }

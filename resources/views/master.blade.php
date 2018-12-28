@@ -7,13 +7,10 @@
 				<!-- Bootstrap -->
 				<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 					<!-- Bootstrap Material Design -->
-					<link rel="stylesheet" type="text/css" href="/css/bootstrap-material-design.css">
-					<link rel="stylesheet" type="text/css" href="/css/ripples.min.css">
 					<link rel="stylesheet" type="text/css" href="/css/navbar.css">	
 					<link rel="stylesheet" type="text/css" href="/css/content.css">	
 					<link rel="stylesheet" type="text/css" href="/css/exam.css">
 				@stack('css')
-
 					
 				</head>
 				<body>

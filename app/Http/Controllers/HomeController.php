@@ -31,7 +31,6 @@ class HomeController extends Controller
         return view('home', compact('subjects', 'exams'));
     }
 
-
     public function __construct()
     {
         $this->middleware('auth');

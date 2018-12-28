@@ -19,7 +19,7 @@
 		<input type="hidden" name="authenticity_token" value="wNP2VHpKw16NG4eEV/1vByxRebzQ6RehCMiLVKjhvaWkLfORmgYDndlxTG6rB/jJ+id+WAAU0Uqo6hJCW2b3Mg==">
 	<ol>
         @foreach($userQs[0]->questions as $qs)
-    		<li class="questions_class" id="{{ $qs->pivot->id }}">
+    		<li class="questions_class" id="{{ $qs->id }}">
             <strong>{!! $qs->content_question !!}</strong>     
 
           @foreach($qs->answers as $answer) 
@@ -44,9 +44,7 @@
         </div>
       </div>
     </div>
-	
-   
-	
+		
 	<div class="timer">
 	    <h4>Time remaining:</h4>
 	    <div id="clock" class="is-countdown">
@@ -85,9 +83,13 @@
         minutes = parseInt(target / 60);
         seconds = parseInt(target % 60);
 
-        document.getElementById("hours").innerHTML = hours;
-        document.getElementById("minutes").innerHTML = minutes;
-        document.getElementById("seconds").innerHTML = seconds;
+        localStorage.setItem('hours',  hours);
+        localStorage.setItem('minutes',  minutes);
+        localStorage.setItem('seconds',  seconds);
+
+        document.getElementById("hours").innerHTML = localStorage.getItem('hours');
+        document.getElementById("minutes").innerHTML = localStorage.getItem('minutes');
+        document.getElementById("seconds").innerHTML = localStorage.getItem('seconds');
         if(target==0)
         {
             clearInterval(a);
@@ -113,7 +115,6 @@
         /* Act on the event */
         $.ajax({
             url: '/save/'+{!! $exams->id !!},
-
             type: 'POST',
             dataType: 'json',
             data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}

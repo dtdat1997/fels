@@ -17,9 +17,10 @@ class CreateExamAnswerTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('exam_question_id')->unique();
             $table->foreign('exam_question_id')
-                    ->references('id')->on('exam_question');
-            $table->unsignedInteger('answer_id')->unique();
-            $table->foreign('answer_id')->references('id')->on('answers');
+                  ->references('id')->on('exam_question');
+            $table->unsignedInteger('answer_id');
+            $table->foreign('answer_id')
+                  ->references('id')->on('answers');
             $table->timestamps();
         });
     }

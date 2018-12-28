@@ -36,7 +36,7 @@ class SubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('home', compact('subjects', 'exams'));
     }
 
     /**

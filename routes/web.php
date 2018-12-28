@@ -20,9 +20,12 @@ Route::get('/exams/{id?}','ExamsController@index');
 //Save exam
 Route::post('/save/{id?}','ExamsController@save');
 
+//Suggest question
+Route::get('/suggest', 'SuggestsController@store');
+Route::get('/suggest/new','SuggestsController@newSuggest');
+
 //Auth
 Auth::routes();
-
 Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('users/register', 'Auth\RegisterController@register');
 Route::get('users/logout', 'Auth\LoginController@logout');

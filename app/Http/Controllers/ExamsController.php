@@ -17,10 +17,12 @@ class ExamsController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $request;
-    function __construct(Request $request)
+
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
+
     public function index($id)
     {
         $exams = Exam::with('subject')->where('id', $id)->firstOrFail();
@@ -28,7 +30,7 @@ class ExamsController extends Controller
         $exams->save();
 
         $userQs = Exam::with('questions.answers')->where('id', $id)->get();
-         //dd($userQs);
+       //  dd($userQs[0]->questions);
         return view('exam', compact('userQs', 'exams'));
     }
 
@@ -75,13 +77,13 @@ class ExamsController extends Controller
         $ansSave = $this->request->post()['data'];
         
         foreach ($ansSave as $ans) {
-            if(isset($ans['answer'])){
+            if (isset($ans['answer'])) {
                 $userAns = ExamAnswer::updateOrCreate([
-                        'answer_id' => $ans['answer'],
                         'exam_question_id' => $ans['id'],
-                    ]);
+                        'answer_id' => $ans['answer'],
+                ]);
                 $userAns->save();
-            }      
+            }
         }
         return json_encode(true);
     }

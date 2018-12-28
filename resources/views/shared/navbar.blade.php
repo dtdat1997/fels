@@ -4,9 +4,6 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            78Chapter 2 - Building An Image Gallery with Vue
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
@@ -17,7 +14,7 @@
             <ul class="nav navbar-nav navbar-right">
                <!-- <li class="active"><a href="/">Home</a></li> -->
                 <li><a href="/">Home</a></li>
-                <li><a href="/about">Contribute questions</a></li>
+                <li><a href="/suggest">Contribute questions</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Member
                         <span class="caret"></span></a>

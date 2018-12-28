@@ -17,13 +17,13 @@ class ExamQuestion extends Model
         return $this->belongsTo('App\Exam');
     }
 
-    // public function answers()
-    // {
-    //     return $this->hasMany('App\Answers');
-    // }
-
     public function questions()
     {
         return $this->belongsTo('App\Question');
+    }
+
+    public function examAnswer()
+    {
+        return $this->hasMany('App\ExamAnser', 'exam_question_id');
     }
 }
