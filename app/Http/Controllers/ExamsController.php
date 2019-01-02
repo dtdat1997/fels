@@ -30,7 +30,7 @@ class ExamsController extends Controller
         $exams->save();
 
         $userQs = Exam::with('questions.answers')->where('id', $id)->get();
-       //  dd($userQs[0]->questions);
+       dd($userQs[0]);
         return view('exam', compact('userQs', 'exams'));
     }
 
@@ -74,15 +74,23 @@ class ExamsController extends Controller
 
     public function save($id)
     {
-        $ansSave = $this->request->post()['data'];
-        
+        $ansSave = $this->request->post()['data'];       
         foreach ($ansSave as $ans) {
             if (isset($ans['answer'])) {
-                $userAns = ExamAnswer::updateOrCreate([
+                $exist = ExamAnswer::where('exam_question_id',$ans['id'])->first();
+                if($exist == null)
+                {
+                    $userAns = new ExamAnswer([
                         'exam_question_id' => $ans['id'],
                         'answer_id' => $ans['answer'],
-                ]);
-                $userAns->save();
+                    ]);
+                    $userAns ->save();
+                }
+                else 
+                {
+                    $exist->answer_id = $ans['answer'];
+                    $exist->save();
+                }
             }
         }
         return json_encode(true);

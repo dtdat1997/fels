@@ -34,11 +34,11 @@
               <div class="check-box-remove">
                 <div class="col-md-2 ">
                   <input name="question[options_attributes][0][correct]" type="hidden" value="0"><input class="check-box" type="checkbox" value="1" name="question[options_attributes][0][correct]" id="question_options_attributes_0_correct">
-                  <label for="question_options_attributes_0_correct" style="font-size: 18px"> Correct?</label>
+                  <label for="question_options_attributes_0_correct" style="font-size: 18px">Correct?</label>
                 </div>
                 <div class="col-md-2 space-top-remove">
                   <input type="hidden" value="false" name="question[options_attributes][0][_destroy]" id="question_options_attributes_0__destroy">
-                  <a id="answer1" class="remove-button text-danger" href="#" style="font-size: 18px">
+                  <a id="answer1" class="remove-button text-danger" href="" style="font-size: 18px">
                     <span class="glyphicon glyphicon-trash"></span> Remove</a>
                 </div>
               </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
           <p class="option-fields">
-            <a id="add-answer" class="fa fa-plus" href="#"><span class="glyphicon glyphicon-plus "></span> Add more</a>
+            <a id="add-answer" class="fa fa-plus" href=""><span class="glyphicon glyphicon-plus "></span> Add more</a>
           </p>
         </div>
         <input type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
@@ -72,11 +72,11 @@
                 "<div class='col-md-2'>"+
                 "<input name='question[options_attributes][0][correct]' type='hidden' value='0'>"+
                 "<input class='check-box' type='checkbox' value='1' name='question[options_attributes][0][correct]' id='question_options_attributes_0_correct'>"+
-                "<label for='question_options_attributes_0_correct' style='font-size: 18px'> Correct?</label>"+
+                "<label for='question_options_attributes_0_correct' style='font-size: 18px'>Correct?</label>"+
                 "</div>"+
               "<div class='col-md-2 space-top-remove'>"+
                 "<input type='hidden' value='false' name='question[options_attributes][0][_destroy]' id='question_options_attributes_0__destroy'>"+
-                "<a id='answer"+i+"' class='remove-button text-danger' href='#' style='font-size: 18px'>"+
+                "<a id='answer"+i+"' class='remove-button text-danger' href='' style='font-size: 18px'>"+
                 "<span class='glyphicon glyphicon-trash'></span> Remove</a>"+
               "</div></div></div></div>";
         $(".group").append(d);

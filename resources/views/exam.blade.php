@@ -19,7 +19,7 @@
 		<input type="hidden" name="authenticity_token" value="wNP2VHpKw16NG4eEV/1vByxRebzQ6RehCMiLVKjhvaWkLfORmgYDndlxTG6rB/jJ+id+WAAU0Uqo6hJCW2b3Mg==">
 	<ol>
         @foreach($userQs[0]->questions as $qs)
-    		<li class="questions_class" id="{{ $qs->id }}">
+    		<li class="questions_class" id="{{ $qs->pivot->id }}">
             <strong>{!! $qs->content_question !!}</strong>     
 
           @foreach($qs->answers as $answer) 
