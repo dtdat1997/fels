@@ -12,17 +12,21 @@
 */
 //Home
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/','ExamsController@store');
+Route::post('/','ExamsController@create');
 
 //Do exam
-Route::get('/exams/{id?}','ExamsController@index');
+Route::get('/exams/{id?}','ExamsController@show');
 
 //Save exam
-Route::post('/save/{id?}','ExamsController@save');
+Route::post('/save/{id?}','ExamsController@saveExam');
+
+//Finish exam
+Route::get('/finish/{id?}','ExamsController@mark');
 
 //Suggest question
-Route::get('/suggest', 'SuggestsController@store');
+Route::get('/suggest', 'SuggestsController@index');
 Route::get('/suggest/new','SuggestsController@newSuggest');
+Route::post('/suggest/new', 'SuggestsController@suggestQues');
 
 //Auth
 Auth::routes();

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Subject;
-use DB;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\BaseRepository;
 
 class HomeController extends Controller
 {
@@ -14,26 +12,18 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function index()
+    protected $base;
+
+    public function __construct(BaseRepository $repo)
     {
-        // $user = User::where('name','Kid328')->first();
-        // Auth::login($user);
-        $subjects = Subject::all();
-        $exams = DB::table('exams')
-                ->leftJoin('subjects', 'exams.subject_id', '=', 'subjects.id')
-                ->select('subjects.name_subject', 'subjects.question_number', 'subjects.duration', 'exams.*')
-                ->get();
-        //$exams = Exams::all();
-        
-        //return view('home', compact('exams'));
-        //($exams);
-        //dd($exams);
-        return view('home', compact('subjects', 'exams'));
+        $this->base = $repo;
     }
 
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
+        $subjects = $this->base->showSub();
+        $exams = $this->base->showAllExam();
+        return view('exams.home', compact('subjects', 'exams'));
     }
 
     /**

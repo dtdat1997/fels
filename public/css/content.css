@@ -2,11 +2,6 @@
 	font-family: Arial, Geneva, Helvetica, sans-serif;;
 }
 
-a {
-    color: #337ab7;
-    text-decoration: none;
-}
-
 body {
 	background-color: #fff;
 }
@@ -87,6 +82,9 @@ option {
     padding: 0px 2px 1px;
 }
 
+.nowrap {
+    display: none;
+}
 
 .exam .button {
     border-radius: 2px;
@@ -110,5 +108,9 @@ hr {
     margin-bottom: 20px;
     border: 0;
     border-top: 1px solid #eeeeee;
+}
+
+thead {
+    background-color: #E1E1E1;
 }
 

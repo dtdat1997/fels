@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +14,16 @@ class Subject extends Model
 
     public function exams()
     {
-        return $this->hasMany('App\Exam', 'subject_id');
+        return $this->hasMany('App\Models\Exam', 'subject_id');
     }
 
     public function questions()
     {
-        return $this->hasMany('App\Question', 'subject_id');
+        return $this->hasMany('App\Models\Question', 'subject_id');
+    }
+
+    public function suggestQues()
+    {
+        return $this->hasMany('App\Models\SuggestQuestion', 'subject_id');
     }
 }

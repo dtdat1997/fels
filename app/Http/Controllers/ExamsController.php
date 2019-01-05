@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Exam;
-use App\Question;
-use App\ExamQuestion;
-use App\ExamAnswer;
+use App\Models\Exam;
+use App\Models\Question;
+use App\Models\Answer;
+use App\Models\ExamQuestion;
+use App\Models\ExamAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\BaseRepository;
 
 class ExamsController extends Controller
 {
@@ -16,22 +18,22 @@ class ExamsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $base;
     protected $request;
 
-    public function __construct(Request $request)
+    public function __construct(BaseRepository $repo, Request $request)
     {
+        $this->base = $repo;
         $this->request = $request;
     }
 
-    public function index($id)
+    public function show($id)
     {
-        $exams = Exam::with('subject')->where('id', $id)->firstOrFail();
-        $exams->status = 'Testing';
-        $exams->save();
-
-        $userQs = Exam::with('questions.answers')->where('id', $id)->get();
-       dd($userQs[0]);
-        return view('exam', compact('userQs', 'exams'));
+        $val = $this->base->showExam($id);
+        $exams = $val['exam'];
+        $userQs = $val['userQs'];
+        $ans = $val['ans'];
+        return view('exams.exam', compact('exams', 'userQs', 'ans'));
     }
 
     /**
@@ -39,61 +41,23 @@ class ExamsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        $exam = new Exam([
-                'subject_id' => $request->exam_subject,
-                'user_id' => Auth::user()->id,
-            ]);
-        $exam->save();
-        $questions = Question::with('answers')
-                    ->where('subject_id', $exam->subject_id)
-                    ->inRandomOrder()
-                    ->limit(20)->get();
-
-        foreach ($questions as $question) {
-            $userQs = new ExamQuestion([
-                'question_id' => $question->id,
-                'exam_id' => $exam->id,
-            ]);
-            $userQs->save();
-        }
-        
+        $this->base->createExam();
         return redirect('/')->with('status', 'Exam was created successfully!!');
     }
 
-    public function save($id)
+    public function saveExam($id)
     {
-        $ansSave = $this->request->post()['data'];       
-        foreach ($ansSave as $ans) {
-            if (isset($ans['answer'])) {
-                $exist = ExamAnswer::where('exam_question_id',$ans['id'])->first();
-                if($exist == null)
-                {
-                    $userAns = new ExamAnswer([
-                        'exam_question_id' => $ans['id'],
-                        'answer_id' => $ans['answer'],
-                    ]);
-                    $userAns ->save();
-                }
-                else 
-                {
-                    $exist->answer_id = $ans['answer'];
-                    $exist->save();
-                }
-            }
-        }
+        $this->base->saveExam($id, $this->request);
         return json_encode(true);
+    }
+
+    public function mark($id)
+    {
+        $this->saveExam($id);
+        $this->base->mark($id);
     }
 
     /**
@@ -102,33 +66,7 @@ class ExamsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $exam = new Exam([
-                'subject_id' => $request->exam_subject,
-            ]);
-        $exam->save();
-        return redirect('/')->with('status', 'Exam was created successfully!!');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //

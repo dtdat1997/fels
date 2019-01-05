@@ -1,4 +1,4 @@
-@extends('master')
+@extends('exams.master')
 @section('title', 'Home')
 @section('content')
 <div class="container">
@@ -24,12 +24,14 @@
 
           @foreach($qs->answers as $answer) 
                 <label class="radio" for="exam_results_attributes_0_answers_attributes_0_option_id">
-                    <input type="radio" value={{ $answer->id }} class="radio" name="exam_answer_{{ $answer->question_id }}" 
+                    <input type="radio" value={{ $answer->id }} 
+                        @if($ans::where('answer_id',$answer->id)->count() == 1) checked="checked"
+                        @endif
+                    class="radio" name="exam_answer_{{ $answer->question_id }}" 
                     id="exam_results_attributes_0_answers_attributes_0_option_id_3111">{{ $answer->content_answer }}
                 </label>
                @endforeach  
             </li> 
-
             <input type="hidden" value="426679" name="exam[results_attributes][0][id]" id="exam_results_attributes_0_id">
         @endforeach
         <br><br>
@@ -39,8 +41,7 @@
       <div class="container">
         <div class="row">
           <input type="submit" id="btSave" name="commit" value="Save" class="btn btn-primary btn-submit submit-time-out" onclick="getAnswer()">
-          <input type="submit" name="commit" value="Finish" class="btn btn-danger btn-submit pull-right" id="btn-finish" data-confirm="Are you sure to finish your exam ?
-            You can't change your answers after you click button OK.">
+          <input type="submit" id="btFinish" name="commit" value="Finish" class="btn btn-danger btn-submit pull-right" id="btn-finish">
         </div>
       </div>
     </div>
@@ -109,8 +110,8 @@
             user_answer.push({'id': id,'answer': answer});
         });
         return user_answer;
-
     }
+
     $('#btSave').click(function(event) {
         /* Act on the event */
         $.ajax({
@@ -120,7 +121,7 @@
             data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
         })
         .done(function() {
-            window.location.href("/");
+            window.location.href = '/';
         })
         .fail(function() {
             console.log("error");
@@ -129,6 +130,28 @@
             console.log("complete");
         });
     });
+
+    $('#btFinish').click(function(event) {
+        var alert = confirm("Are you sure finish your exam?\nYou can't change your answers after you click button OK.");
+        // if(alert)
+        // {
+            $.ajax({
+                url: '/finish/'+{!! $exams->id !!},
+                type: 'POST',
+                dataType: 'json',
+                data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
+            })
+            .done(function() {
+                window.location.href = '/';
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        
+     });
         
     </script> 
 @endpush

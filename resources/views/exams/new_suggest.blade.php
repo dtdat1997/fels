@@ -1,4 +1,4 @@
-@extends('master')
+@extends('exams.master')
 @section('title', 'Home')
 @section('content')
 <div class="container">
@@ -8,8 +8,8 @@
     <div id="question" class="row">
       <div class="col-md-12">
         <h2><b>Suggest Question</b></h2>
-        <form class="new_question" id="new_question" action="/users/2431/questions" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="rS/BiXBVaS/7P9/dImH0BH4Fwak/LvNx3/WSEagiuiIg2LpDNwHakEMOpHDNr6f0qCKU4X0UYHx6R+4Q1by2VA==">
-        
+        <form class="new_question" id="new_question" action="/suggest/new" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">     
         <label class="space-top" for="question_subject">Subject</label>
         <select class="form-control" name="exam_subject" id="exam_subject_id">
             @foreach($subjects as $subject)
@@ -17,7 +17,7 @@
             @endforeach
           </select>
         <label class="space-top" for="question_content">Content</label>
-        <textarea cols="40" rows="10" class="form-control" name="question[content]" id="question_content"></textarea>
+        <textarea cols="40" rows="10" class="form-control" name="question_content" id="question_content"></textarea>
         <span class="help-block">User can use <code>&lt;pre&gt;&lt;code class="language-css"&gt;your code here&lt;/code&gt;&lt;/pre&gt;</code> to input it on question content.</span>
         <label class="space-top" for="question_question_type">Question type</label>
         <select class="form-control width-question-type" name="question[question_type]" id="question_question_type"><option value="single_choice">single choice</option>
@@ -29,7 +29,7 @@
             <label class="answer-title" for="question_options_attributes_0_content">Option</label>
             <div class="col-md-12">
               <div class="col-md-8">
-                <input class="form-control" type="text" name="question[options_attributes][0][content]" id="question_options_attributes_0_content">
+                <input class="form-control" type="text" name="sg_answer" id="question_options_attributes_0_content">
               </div>
               <div class="check-box-remove">
                 <div class="col-md-2 ">
@@ -66,7 +66,7 @@
                "<label class='answer-title' for='question_options_attributes_0_content'>Option</label>"+
               "<div class='col-md-12'>"+
                 "<div class='col-md-8'>"+
-                   "<input class='form-control' type='text' name='question[options_attributes][0][content]' id='question_options_attributes_0_content'>"+
+                   "<input class='form-control' type='text' name='sg_answer' id='question_options_attributes_0_content'>"+
                 "</div>"+
               "<div class='check-box-remove'>"+
                 "<div class='col-md-2'>"+
@@ -82,6 +82,16 @@
         $(".group").append(d);
         i++;
     });
+
+    function getAnswer(){
+        let user_answer = [];
+        $('.questions_class').each(function( index, value ) {
+            id = $(this).attr('id');
+            answer = $(this).find('input[type="checkbox"]:checked').val();
+            user_answer.push({'id': id,'answer': answer});
+        });
+        return user_answer;
+    }
 
     $(document).on('click','a.remove-button',function(event) {
       event.preventDefault();
