@@ -29,6 +29,12 @@ class SuggestsController extends Controller
     public function suggestQues(Request $request)
     {
         $sug = $this->base->createSug($request);
-        return $this->index();
+        return redirect()->route('showSug');
+    }
+
+    public function deleteSug($id)
+    {
+        $this->base->deleteSug($id);
+        return redirect()->route('showSug');
     }
 }

@@ -37,7 +37,7 @@
 						<td><div class="label label-warning">Waiting</div></td>
 						<td>
 					      <a class="glyphicon glyphicon-edit icon-padding link-underline" href=""></a>
-					      <a data-confirm="Are you sure?" class="glyphicon glyphicon-trash icon-padding link-underline" rel="nofollow" href=""></a>
+					      <a data-confirm="Are you sure?" class="glyphicon glyphicon-trash icon-padding link-underline" rel="nofollow" href="/suggest/remove/{{ $sug->id }}"></a>
 					 	</td>
 					</tr>
 				@endforeach
@@ -46,3 +46,8 @@
 	</div></div>
 </div>
 @endsection
+@push('js')
+    <script type="text/javascript">
+        
+    </script> 
+@endpush

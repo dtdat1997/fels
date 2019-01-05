@@ -39,10 +39,10 @@ class BaseRepository
         $exams->save();
         $userQs = Exam::with('questions.answers')->where('id', $id)->get();
         $ans = new ExamAnswer();
-        return array['exam' => $exams,
-                     'userQs' => $userQs,
-                     'ans' => $ans,
-        ];
+        return ['exam' => $exams,
+                'userQs' => $userQs,
+                 'ans' => $ans,
+            ];
     }
 
     public function createExam($request)
@@ -122,5 +122,16 @@ class BaseRepository
             'content_question' => $request->question_content,
         ]);
         $sug->save();
+    }
+
+    public function editSug($id)
+    {
+
+    }
+
+    public function deleteSug($id)
+    {
+        $suggest = SuggestQuestion::where('id',$id);
+        $suggest->delete();
     }
 }

@@ -24,9 +24,10 @@ Route::post('/save/{id?}','ExamsController@saveExam');
 Route::get('/finish/{id?}','ExamsController@mark');
 
 //Suggest question
-Route::get('/suggest', 'SuggestsController@index');
+Route::get('/suggest', 'SuggestsController@index')->name('showSug');
 Route::get('/suggest/new','SuggestsController@newSuggest');
 Route::post('/suggest/new', 'SuggestsController@suggestQues');
+Route::get('/suggest/remove/{id?}','SuggestsController@deleteSug');
 
 //Auth
 Auth::routes();
