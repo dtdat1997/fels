@@ -8,7 +8,7 @@
     <div id="question" class="row">
       <div class="col-md-12">
         <h2><b>Suggest Question</b></h2>
-        <form class="new_question" id="new_question" action="/suggest/new" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+        <form class="new_question" id="new_question" action="" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">     
         <label class="space-top" for="question_subject">Subject</label>
         <select class="form-control" name="exam_subject" id="exam_subject_id">
@@ -49,7 +49,7 @@
             <a id="add-answer" class="fa fa-plus" href=""><span class="glyphicon glyphicon-plus "></span> Add more</a>
           </p>
         </div>
-        <input type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
+        <input id="btSuggest" type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
       </form>
     </div>
   </div>
@@ -85,17 +85,37 @@
 
     function getAnswer(){
         let user_answer = [];
-        $('.questions_class').each(function( index, value ) {
-            id = $(this).attr('id');
-            answer = $(this).find('input[type="checkbox"]:checked').val();
-            user_answer.push({'id': id,'answer': answer});
+        $('.group').each(function( index, value ) {
+            content = $(this).find('input[type="text"]').val();
+            correct = $(this).find('input[type="checkbox"]:checked')?1:0;
+            answer.push({'content': content, 'correct': correct});
         });
-        return user_answer;
+        return answer;
     }
 
     $(document).on('click','a.remove-button',function(event) {
-      event.preventDefault();
-      $('div[id='+$(this).attr('id')+']').remove();
+        event.preventDefault();
+        $('div[id='+$(this).attr('id')+']').remove();
+    });
+
+    $('#btSuggest').click(function(event) {
+        /* Act on the event */
+
+    //     $.ajax({
+    //         url: '/suggest/new',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
+    //     })
+    //     .done(function() {
+    //         window.location.href = '/suggest';
+    //     })
+    //     .fail(function() {
+    //         console.log("error");
+    //     })
+    //     .always(function() {
+    //         console.log("complete");
+    //     });
     });
         
     </script> 

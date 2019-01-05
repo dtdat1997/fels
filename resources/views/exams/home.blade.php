@@ -57,12 +57,12 @@
 				@foreach($exams as $exam)
 					<tr>
 					<td>{!! $exam->created_at !!}</td>
-					<td>{!! $exam->name_subject !!}</td>
+					<td>{!! $exam->subject->name_subject !!}</td>
 					<td class="status">
 						{!! $exam->status !!}
 					</td>
-					<td>{!! $exam->duration !!}</td>
-					<td>{!! $exam->question_number !!}</td>
+					<td>{!! $exam->subject->duration !!}</td>
+					<td>{!! $exam->subject->question_number !!}</td>
 					<td>@if(is_null($exam->spent_time))
 								{{ '00:00:00' }}
 						@endif

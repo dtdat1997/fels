@@ -32,7 +32,7 @@
 					<tr>
 						<td id="{{ $sug->id }}">{{ $sug->id }}</td>
 						<td><a href="/">{{ $sug->content_question }}</a></td>
-						<td>{{ $sug->name_subject }}</td>
+						<td>{{ $sug->subject->name_subject }}</td>
 						<td>Single_choice</td>
 						<td><div class="label label-warning">Waiting</div></td>
 						<td>

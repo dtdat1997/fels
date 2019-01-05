@@ -10,7 +10,6 @@ use App\Models\Exam;
 use App\Models\ExamQuestion;
 use App\Models\ExamAnswer;
 use App\Models\SuggestQuestion;
-use DB;
 
 class BaseRepository
 {
@@ -24,10 +23,7 @@ class BaseRepository
 
     public function showAllExam()
     {
-        $exams = DB::table('exams')
-                ->leftJoin('subjects', 'exams.subject_id', '=', 'subjects.id')
-                ->select('subjects.name_subject', 'subjects.question_number', 'subjects.duration', 'exams.*')
-                ->get();
+        $exams = Exam::with('subject')->get();
         return $exams;
     }
 
@@ -107,10 +103,7 @@ class BaseRepository
     //Suggest
     public function showAllSug()
     {
-        $suggests = DB::table('suggest_questions')
-                    ->leftJoin('subjects', 'suggest_questions.subject_id', '=', 'subjects.id')
-                    ->select('subjects.name_subject', 'suggest_questions.*')
-                    ->get();
+        $suggests = SuggestQuestion::with('subject')->get();
         return $suggests;
     }
 

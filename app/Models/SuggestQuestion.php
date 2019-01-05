@@ -17,8 +17,8 @@ class SuggestQuestion extends Model
         return $this->hasMany('App\Models\SuggestAns', 'suggest_question_id');
     }
 
-    public function subjects()
+    public function subject()
     {
-        return $this->belongsTo('App\Models\Subject');
+        return $this->belongsTo('App\Models\Subject', 'subject_id');
     }
 }
