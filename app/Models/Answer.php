@@ -12,7 +12,7 @@ class Answer extends Model
 
     public function questions()
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo('App\Models\Question', 'question_id');
     }
 
     public function examAnswer()

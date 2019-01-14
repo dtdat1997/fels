@@ -7,11 +7,13 @@ use App\Repositories\Contracts\BaseRepository;
 
 class SuggestsController extends Controller
 {
-    protected $base;
+    protected $base; 
+    protected $request;
 
-    public function __construct(BaseRepository $repo)
+    public function __construct(BaseRepository $repo, Request $request)
     {
         $this->base = $repo;
+        $this->request = $request;
     }
 
     public function index()
@@ -22,14 +24,14 @@ class SuggestsController extends Controller
 
     public function newSuggest()
     {
-        $subjects = $this->base->showSub();
-        return view('exams.new_suggest', compact('subjects'));
+        $suggests = $this->base->createSug($this->request);
+        return json_encode(true);
     }
 
-    public function suggestQues(Request $request)
+    public function suggestQues()
     {
-        $sug = $this->base->createSug($request);
-        return redirect()->route('showSug');
+        $subjects = $this->base->showSub();
+        return view('exams.new_suggest', compact('subjects'));  
     }
 
     public function deleteSug($id)

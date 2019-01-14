@@ -26,6 +26,21 @@ class HomeController extends Controller
         return view('exams.home', compact('subjects', 'exams'));
     }
 
+    public function home()
+    {
+        return view('homepages.homepage');
+    }
+
+    public function course()
+    {
+        return view('homepages.course');
+    }
+
+    public function discussion()
+    {
+        return view('homepages.discussion');
+    }
+
     /**
      * Show the application dashboard.
      *

@@ -28,9 +28,9 @@
 				</tr>
 				</thead>
 				<tbody>
-				@foreach($suggests as $sug)
+				@foreach($suggests as $key => $sug)
 					<tr>
-						<td id="{{ $sug->id }}">{{ $sug->id }}</td>
+						<td id="{{ $sug->id }}">{{ ++$key }}</td>
 						<td><a href="/">{{ $sug->content_question }}</a></td>
 						<td>{{ $sug->subject->name_subject }}</td>
 						<td>Single_choice</td>

@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Answer::class, function (Faker $faker) {
+$factory->define(App\Models\Answer::class, function (Faker $faker) {
     return [
         'content_answer' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'correct' => $faker->boolean($chanceOfGettingTrue = 4),

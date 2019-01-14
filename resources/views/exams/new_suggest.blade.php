@@ -25,15 +25,17 @@
         <option value="text">text</option></select>
         <div class="space-top">
           <div class="group">
+            <div class="suggest">
           <div id="answer1" class="form-group answer-field-box clearfix">
             <label class="answer-title" for="question_options_attributes_0_content">Option</label>
             <div class="col-md-12">
               <div class="col-md-8">
-                <input class="form-control" type="text" name="sg_answer" id="question_options_attributes_0_content">
+                <input class="form-control" type="text" name="sg_answer" id="sg_answer">
               </div>
               <div class="check-box-remove">
                 <div class="col-md-2 ">
-                  <input name="question[options_attributes][0][correct]" type="hidden" value="0"><input class="check-box" type="checkbox" value="1" name="question[options_attributes][0][correct]" id="question_options_attributes_0_correct">
+                  <input name="question[options_attributes][0][correct]" type="hidden" value="0">
+                  <input class="check-box" type="checkbox" value="1" name="question[options_attributes][0][correct]" id="question_options_attributes_0_correct">
                   <label for="question_options_attributes_0_correct" style="font-size: 18px">Correct?</label>
                 </div>
                 <div class="col-md-2 space-top-remove">
@@ -43,14 +45,16 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
+        </div>
+      </div>
           <p class="option-fields">
             <a id="add-answer" class="fa fa-plus" href=""><span class="glyphicon glyphicon-plus "></span> Add more</a>
           </p>
         </div>
-        <input id="btSuggest" type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
       </form>
+      <input id="btSuggest" type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
+       <input id="bttest" type="submit" name="commit" value="Suggest" class="btn btn-primary button space-top-submit">
     </div>
   </div>
 </div>
@@ -62,11 +66,11 @@
     var i = 2;
     $('#add-answer').click(function(event) {
       event.preventDefault();
-      var d =  "<div id='answer"+i+"' class='form-group answer-field-box clearfix'>"+
+      var d =  "<div class='suggest'><div id='answer"+i+"' class='form-group answer-field-box clearfix'>"+
                "<label class='answer-title' for='question_options_attributes_0_content'>Option</label>"+
               "<div class='col-md-12'>"+
                 "<div class='col-md-8'>"+
-                   "<input class='form-control' type='text' name='sg_answer' id='question_options_attributes_0_content'>"+
+                   "<input class='form-control' type='text' name='question_content' id='question_options_attributes_0_content'>"+
                 "</div>"+
               "<div class='check-box-remove'>"+
                 "<div class='col-md-2'>"+
@@ -78,20 +82,26 @@
                 "<input type='hidden' value='false' name='question[options_attributes][0][_destroy]' id='question_options_attributes_0__destroy'>"+
                 "<a id='answer"+i+"' class='remove-button text-danger' href='' style='font-size: 18px'>"+
                 "<span class='glyphicon glyphicon-trash'></span> Remove</a>"+
-              "</div></div></div></div>";
+              "</div></div></div></div></div>";
         $(".group").append(d);
         i++;
     });
 
     function getAnswer(){
-        let user_answer = [];
-        $('.group').each(function( index, value ) {
+        var qs = $('#question_content').val();
+        var id = $('#exam_subject_id').val();
+        let answer = [];
+        $('.suggest').each(function( index, value ) {
             content = $(this).find('input[type="text"]').val();
-            correct = $(this).find('input[type="checkbox"]:checked')?1:0;
-            answer.push({'content': content, 'correct': correct});
+            correct = $(this).find('input[type="checkbox"]:checked').val()?1:0;
+            answer.push({'id': id, 'qs_content': qs, 'content': content, 'correct': correct });
         });
         return answer;
     }
+
+    $('#bttest').click(function(event) {
+       console.log(getAnswer());
+    });
 
     $(document).on('click','a.remove-button',function(event) {
         event.preventDefault();
@@ -100,22 +110,21 @@
 
     $('#btSuggest').click(function(event) {
         /* Act on the event */
-
-    //     $.ajax({
-    //         url: '/suggest/new',
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
-    //     })
-    //     .done(function() {
-    //         window.location.href = '/suggest';
-    //     })
-    //     .fail(function() {
-    //         console.log("error");
-    //     })
-    //     .always(function() {
-    //         console.log("complete");
-    //     });
+        $.ajax({
+            url: '/suggest/new',
+            type: 'POST',
+            dataType: 'json',
+            data: {'data': getAnswer(),'_token': "{{ csrf_token() }}"}
+        })
+        .done(function() {
+            window.location.href = '/suggest';
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
     });
         
     </script> 

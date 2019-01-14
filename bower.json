@@ -1,0 +1,21 @@
+{
+  "name": "fels",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Pham Tri Trung <phamtritrung39@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/plumpboy/fels",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "metronic": ">= 1.0.1"
+  }
+}

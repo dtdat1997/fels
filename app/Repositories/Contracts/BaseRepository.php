@@ -10,6 +10,7 @@ use App\Models\Exam;
 use App\Models\ExamQuestion;
 use App\Models\ExamAnswer;
 use App\Models\SuggestQuestion;
+use App\Models\SuggestAnswer;
 
 class BaseRepository
 {
@@ -37,7 +38,7 @@ class BaseRepository
         $ans = new ExamAnswer();
         return ['exam' => $exams,
                 'userQs' => $userQs,
-                 'ans' => $ans,
+                'ans' => $ans,
             ];
     }
 
@@ -108,13 +109,23 @@ class BaseRepository
     }
 
     public function createSug($request)
-    {
+    {     
+        $qs = $request->post()['data'];
         $sug = new SuggestQuestion([
-            'subject_id' => $request->exam_subject,
+            'subject_id' => $qs[0]['id'],
             'user_id' => Auth::user()->id,
-            'content_question' => $request->question_content,
+            'content_question' => $qs[0]['qs_content'],
         ]);
         $sug->save();
+        
+        foreach ($qs as $q) {
+            $ans = new SuggestAnswer([
+                'suggest_question_id' => $sug->id,
+                'content_answer' => $q['content'],
+                'correct' => $q['correct'],
+            ]);
+            $ans->save();
+        }
     }
 
     public function editSug($id)
@@ -124,7 +135,7 @@ class BaseRepository
 
     public function deleteSug($id)
     {
-        $suggest = SuggestQuestion::where('id',$id);
+        $suggest = SuggestQuestion::where('id', $id);
         $suggest->delete();
     }
 }

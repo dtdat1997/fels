@@ -40,7 +40,7 @@
     <div id="btn-submit-form-group">
       <div class="container">
         <div class="row">
-          <input type="submit" id="btSave" name="commit" value="Save" class="btn btn-primary btn-submit submit-time-out" onclick="getAnswer()">
+          <input type="submit" id="btSave" name="commit" value="Save" class="btn btn-primary btn-submit submit-time-out">
           <input type="submit" id="btFinish" name="commit" value="Finish" class="btn btn-danger btn-submit pull-right" id="btn-finish">
         </div>
       </div>
