@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExamQuestion extends Model
 {
-    protected $table = 'exam_question';
-
     protected $guarded = ['id'];
+
+    protected $table = 'exam_question';
     
-    protected $fillable = ['question_id', 'exam_id'];
+    protected $fillable = [
+        'question_id', 
+        'exam_id',
+    ];
 
     public function exams()
     {

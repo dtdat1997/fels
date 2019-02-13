@@ -23,7 +23,28 @@ class HomeController extends Controller
     {
         $subjects = $this->base->showSub();
         $exams = $this->base->showAllExam();
+        
         return view('exams.home', compact('subjects', 'exams'));
+    }
+
+    public function home()
+    {
+        return view('homepages.homepage');
+    }
+
+    public function course()
+    {
+        return view('homepages.course');
+    }
+
+    public function detail()
+    {
+        return view('homepages.detail_course');
+    }
+
+    public function discussion()
+    {
+        return view('homepages.discussion');
     }
 
     /**

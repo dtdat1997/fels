@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $table = 'questions';
     protected $guarded = ['id'];
-    protected $fillable = ['subject_id', 'content_question'];
 
-    public function subjects()
+    protected $fillable = [
+        'component_id', 
+        'content_question',
+    ];
+
+    public function components()
     {
-        return $this->belongsTo('App\Models\Subject');
+        return $this->belongsTo('App\Models\Component');
     }
 
     public function exams()

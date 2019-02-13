@@ -13,9 +13,9 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Question::class, function (Faker $faker) {
+$factory->define(App\Models\Question::class, function (Faker $faker) {
     return [
-        'subject_id' => $faker->numberBetween(1,13),
+        'component_id' => $faker->numberBetween(1,13),
         'content_question' => $faker->text.'?',
         'created_at' => new DateTime,
         'updated_at' => new DateTime,

@@ -10,7 +10,11 @@ class SuggestAnswer extends Model
 
     protected $guarded = ['id'];
     
-    protected $fillable = ['suggest_question_id', 'content_answer', 'correct'];
+    protected $fillable = [
+        'suggest_question_id',
+        'content_answer',
+        'correct',
+    ];
 
     public function suggestAns()
     {

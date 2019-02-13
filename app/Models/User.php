@@ -6,17 +6,18 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+/**
+ * Class User.
+ *
+ * @package namespace App\Models;
+ */
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = 'users';
-
     protected $fillable = [
         'name',
         'email',
@@ -30,6 +31,15 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-    'remember_token',
+        'remember_token',
     ];
+
+    public function courses()
+    {
+        return $this->hasMany('App\Models\Course');
+    }
+    public function programs()
+    {
+        return $this->hasMany('App\Models\Program');
+    }
 }

@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateExamsTable extends Migration
 {
     /**
@@ -20,9 +18,9 @@ class CreateExamsTable extends Migration
                   ->references('id')->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-            $table->unsignedInteger('subject_id');
-            $table->foreign('subject_id')
-                  ->references('id')->on('subjects')
+            $table->unsignedInteger('component_id');
+            $table->foreign('component_id')
+                  ->references('id')->on('components')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->time('spent_time')->nullable();
@@ -31,7 +29,6 @@ class CreateExamsTable extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

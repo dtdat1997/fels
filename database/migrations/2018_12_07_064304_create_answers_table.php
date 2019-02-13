@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateAnswersTable extends Migration
 {
     /**
@@ -16,13 +14,14 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('question_id')->references('id')->on('questions')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');;
             $table->string('content_answer');
             $table->boolean('correct');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

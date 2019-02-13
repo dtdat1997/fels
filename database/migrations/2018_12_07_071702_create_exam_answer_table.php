@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateExamAnswerTable extends Migration
 {
     /**
@@ -19,7 +17,6 @@ class CreateExamAnswerTable extends Migration
             $table->unsignedInteger('answer_id');
             $table->timestamps();
         });
-
         Schema::table('exam_answer', function (Blueprint $table) {
             $table->foreign('exam_question_id')
                   ->references('id')->on('exam_question');
@@ -27,7 +24,6 @@ class CreateExamAnswerTable extends Migration
                   ->references('id')->on('answers');
         });
     }
-
     /**
      * Reverse the migrations.
      *

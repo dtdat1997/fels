@@ -6,15 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
-    protected $table = 'exams';
-
     protected $guarded = ['id'];
 
-    protected $fillable = ['user_id', 'subject_id', 'spent_time', 'duration', 'status', 'score'];
+    protected $fillable = [
+        'user_id', 
+        'component_id', 
+        'spent_time', 
+        'duration', 
+        'status', 
+        'score',
+    ];
 
-    public function subject()
+    public function components()
     {
-        return $this->belongsTo('App\Models\Subject');
+        return $this->belongsTo('App\Models\Component', 'component_id');
     }
 
     public function questions()

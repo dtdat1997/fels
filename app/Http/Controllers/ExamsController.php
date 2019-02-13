@@ -45,7 +45,7 @@ class ExamsController extends Controller
     public function create(Request $request)
     {
         $this->base->createExam($request);
-        return redirect('/')->with('status', 'Exam was created successfully!!');
+        return redirect('/exams')->with('status', 'Exam was created successfully!!');
     }
 
     public function saveExam($id)

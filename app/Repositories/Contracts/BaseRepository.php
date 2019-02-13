@@ -3,14 +3,13 @@ namespace App\Repositories\Contracts;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Subject;
+use App\Models\Component;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
 use App\Models\ExamAnswer;
 use App\Models\SuggestQuestion;
-use DB;
 
 class BaseRepository
 {
@@ -18,23 +17,20 @@ class BaseRepository
     //Home
     public function showSub()
     {
-        $subjects = Subject::all();
+        $subjects = Component::all();
         return $subjects;
     }
 
     public function showAllExam()
     {
-        $exams = DB::table('exams')
-                ->leftJoin('subjects', 'exams.subject_id', '=', 'subjects.id')
-                ->select('subjects.name_subject', 'subjects.question_number', 'subjects.duration', 'exams.*')
-                ->get();
+        $exams = Exam::with('components')->get();
         return $exams;
     }
 
     //Exam
     public function showExam($id)
     {
-        $exams = Exam::with('subject')->where('id', $id)->firstOrFail();
+        $exams = Exam::with('components')->where('id', $id)->firstOrFail();
         $exams->status = 'testing';
         $exams->save();
         $userQs = Exam::with('questions.answers')->where('id', $id)->get();
@@ -48,12 +44,12 @@ class BaseRepository
     public function createExam($request)
     {
         $exam = new Exam([
-                'subject_id' => $request->exam_subject,
+                'component_id' => $request->exam_subject,
                 'user_id' => Auth::user()->id,
             ]);
         $exam->save();
         $questions = Question::with('answers')
-                    ->where('subject_id', $exam->subject_id)
+                    ->where('component_id', $exam->component_id)
                     ->inRandomOrder()
                     ->limit(20)->get();
 
@@ -107,17 +103,14 @@ class BaseRepository
     //Suggest
     public function showAllSug()
     {
-        $suggests = DB::table('suggest_questions')
-                    ->leftJoin('subjects', 'suggest_questions.subject_id', '=', 'subjects.id')
-                    ->select('subjects.name_subject', 'suggest_questions.*')
-                    ->get();
+        $suggests = SuggestQuestion::with('components')->get();
         return $suggests;
     }
 
     public function createSug($request)
     {
         $sug = new SuggestQuestion([
-            'subject_id' => $request->exam_subject,
+            'component_id' => $request->exam_subject,
             'user_id' => Auth::user()->id,
             'content_question' => $request->question_content,
         ]);

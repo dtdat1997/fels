@@ -1,53 +1,46 @@
-@extends('exams.master')
+@extends('homepages.master')
 @section('title', 'Home')
 @section('content')
 <div class="container">
-	<div class="content container">
-		<div class="col-md-12 width-flash">
-		</div>
-	</div>
-	<div class="row exam">
-		<div class="col-md-12">
-			<div class="form-exam">
-				<form class="new_exam" id="new_exam" action="/" accept-charset="UTF-8" method="post"> 
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">     
-				</form>
-			</div>
-		<hr>
-		<h2><b>Suggested Question</b>
-		<a class="pull-right link-text-question" href="suggest/new" style="font-size: 14px">
-			<span class="glyphicon glyphicon-plus"></span>New question</a></h2>
-			<table class="table">
-				<thead>
-					<tr><th class="number_id">STT</th>
-					<th class="content">Question</th>
-					<th class="subject">Subject</th>
-					<th class="type">Type</th>
-					<th class="state">State</th>
-					<th class="action"></th>
-				</tr>
-				</thead>
-				<tbody>
-				@foreach($suggests as $sug)
-					<tr>
-						<td id="{{ $sug->id }}">{{ $sug->id }}</td>
-						<td><a href="/">{{ $sug->content_question }}</a></td>
-						<td>{{ $sug->name_subject }}</td>
-						<td>Single_choice</td>
-						<td><div class="label label-warning">Waiting</div></td>
-						<td>
-					      <a class="glyphicon glyphicon-edit icon-padding link-underline" href=""></a>
-					      <a data-confirm="Are you sure?" class="glyphicon glyphicon-trash icon-padding link-underline" rel="nofollow" href="/suggest/remove/{{ $sug->id }}"></a>
-					 	</td>
-					</tr>
-				@endforeach
-			</tbody>
-			</table>
-	</div></div>
+    <div class="row exam">
+        <div class="col-md-12">
+            <div class="form-exam">
+                {!! Form::open(['class' => 'new_exam', 'url' => '']) !!}
+                {!! Form::close() !!}
+            </div>
+        <hr>
+        <h2><b>{{ Lang::get('label.suggested_question') }}</b>
+        <a class="pull-right link-text-question" href="suggest/new" style="font-size: 14px">
+            <span class="glyphicon glyphicon-plus"></span>{{ Lang::get('label.new_question') }}</a></h2>
+            <table class="table">
+                <thead>
+                    <tr><th class="number_id">{{ Lang::get('label.stt') }}</th>
+                    <th class="content">{{ Lang::get('label.question') }}</th>
+                    <th class="subject">{{ Lang::get('label.subjects') }}</th>
+                    <th class="type">{{ Lang::get('label.type') }}</th>
+                    <th class="state">{{ Lang::get('label.state') }}</th>
+                    <th class="action"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($suggests as $sug)
+                    <tr>
+                        <td id="{{ $sug->id }}">{{ $sug->id }}</td>
+                        <td><a href="/">{{ $sug->content_question }}</a></td>
+                        <td>{{ $sug->components->component_type }}</td>
+                        <td>{{ Lang::get('label.single_choice') }}</td>
+                        <td><div class="label label-warning">{{ Lang::get('label.waiting') }}</div></td>
+                        <td>
+                        <a class="glyphicon glyphicon-edit icon-padding link-underline" href=""></a>
+                        <a data-confirm="Are you sure?" class="glyphicon glyphicon-trash icon-padding link-underline" rel="nofollow" href="/suggest/remove/{{ $sug->id }}"></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+            </table>
+    </div></div>
 </div>
 @endsection
 @push('js')
-    <script type="text/javascript">
-        
-    </script> 
+    <script type="text/javascript"></script> 
 @endpush

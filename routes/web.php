@@ -11,30 +11,43 @@
 |
 */
 //Home
-Route::get('/', 'HomeController@index')->name('home');
-Route::post('/','ExamsController@create');
 
-//Do exam
-Route::get('/exams/{id?}','ExamsController@show');
+Route::group(['middleware' => 'localization', 'prefix' => Session::get('locale')], function() {
 
-//Save exam
-Route::post('/save/{id?}','ExamsController@saveExam');
+	Route::get('/exams', 'HomeController@index')->name('home');
+	Route::post('/exams','ExamsController@create')->name('createExam');
 
-//Finish exam
-Route::get('/finish/{id?}','ExamsController@mark');
+	//Do exam
+	Route::get('/exams/{id?}','ExamsController@show');
 
-//Suggest question
-Route::get('/suggest', 'SuggestsController@index')->name('showSug');
-Route::get('/suggest/new','SuggestsController@newSuggest');
-Route::post('/suggest/new', 'SuggestsController@suggestQues');
-Route::get('/suggest/remove/{id?}','SuggestsController@deleteSug');
+	//Save exam
+	Route::post('/save/{id?}','ExamsController@saveExam');
 
-//Auth
-Auth::routes();
-Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
-Route::post('users/register', 'Auth\RegisterController@register');
-Route::get('users/logout', 'Auth\LoginController@logout');
-Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('users/login', 'Auth\LoginController@login');
+	//Finish exam
+	Route::get('/finish/{id?}','ExamsController@mark');
 
+	//Suggest question
+	Route::get('/suggest', 'SuggestsController@index')->name('showSug');
+	Route::get('/suggest/new','SuggestsController@newSuggest');
+	Route::post('/suggest/new', 'SuggestsController@suggestQues');
+	Route::get('/suggest/remove/{id?}','SuggestsController@deleteSug');
+
+	//Auth
+	Auth::routes();
+	Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
+	Route::post('users/register', 'Auth\RegisterController@register');
+	Route::get('users/logout', 'Auth\LoginController@logout');
+	Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
+	Route::post('users/login', 'Auth\LoginController@login');
+
+    Route::get('/', 'HomeController@home');
+    Route::get('/course', 'HomeController@course');
+    Route::get('/detail', 'HomeController@detail');
+    Route::get('/discussion', 'HomeController@discussion');
+
+    Route::post('/lang', [
+        'as' => 'switchLang',
+        'uses' => 'LangController@postLang',
+    ]);
+});
 

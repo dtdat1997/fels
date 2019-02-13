@@ -10,15 +10,19 @@ class SuggestQuestion extends Model
 
     protected $guarded = ['id'];
     
-    protected $fillable = ['subject_id', 'user_id', 'content_question'];
+    protected $fillable = [
+        'component_id', 
+        'user_id', 
+        'content_question',
+    ];
 
     public function suggestAns()
     {
         return $this->hasMany('App\Models\SuggestAns', 'suggest_question_id');
     }
 
-    public function subjects()
+    public function components()
     {
-        return $this->belongsTo('App\Models\Subject');
+        return $this->belongsTo('App\Models\Component', 'component_id');
     }
 }
